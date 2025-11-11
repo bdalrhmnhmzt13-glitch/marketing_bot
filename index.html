@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حمزة - مطور ويب محترف</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--light);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* الهيدر */
+        header {
+            background: rgba(44, 62, 80, 0.95);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--light);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* القسم الرئيسي */
+        .hero {
+            padding: 150px 0 100px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .profile-image {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 5px solid var(--secondary);
+            overflow: hidden;
+            background: #34495e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin: 5px;
+            border: 2px solid var(--accent);
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            transform: translateY(-2px);
+        }
+
+        /* الأقسام */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--light);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* معرض الأعمال */
+        .portfolio-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .portfolio-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .portfolio-image {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            background: #34495e;
+        }
+
+        .portfolio-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .portfolio-item:hover .portfolio-image img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-info {
+            padding: 1.5rem;
+        }
+
+        .portfolio-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+
+        /* نموذج الاتصال */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--light);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.1);
+            color: var(--light);
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--secondary);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .submit-btn:hover {
+            background: #219a52;
+            transform: translateY(-2px);
+        }
+
+        /* العناصر النائبة */
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        /* لوحة تحكم البوت */
+        .bot-dashboard {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .bot-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .bot-header h2 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            text-align: center;
+            border: 1px solid #f0f0f0;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .stat {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+
+        .status-online {
+            display: inline-block;
+            background: var(--success);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .channel-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .channel-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .message-box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border: 1px solid #f0f0f0;
+        }
+
+        .last-message {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-right: 5px solid #667eea;
+            margin: 15px 0;
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #2c3e50;
+        }
+
+        .timestamp {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .history-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #764ba2;
+            color: #2c3e50;
+        }
+
+        /* التكيف مع الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .profile-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero {
+                padding: 120px 0 60px;
+            }
+            
+            .portfolio-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* تأثيرات التمرير */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- الهيدر -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">👨‍💻 مطور ويب</div>
+                <ul class="nav-links">
+                    <li><a href="#home">الرئيسية</a></li>
+                    <li><a href="#portfolio">معرض الأعمال</a></li>
+                    <li><a href="#bot">البوت الإسلامي</a></li>
+                    <li><a href="#contact">اتصل بي</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- القسم الرئيسي -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="profile-section">
+                <div class="profile-image">
+                    <img src="profile.jpg" alt="صورة حمزة" 
+                         onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=image-placeholder>👨‍💻</div>';">
+                </div>
+                <div class="profile-text">
+                    <h1>حمزة - مطور ويب محترف</h1>
+                    <p>أطور مواقع ويب حديثة، بوتات تليجرام ذكية، ومتاجر إلكترونية متكاملة</p>
+                    <p>متخصص في تطوير حلول رقمية مبتكرة تلبي احتياجات العملاء</p>
+                </div>
+            </div>
+            <div>
+                <a href="https://t.me/Hamza221w" class="cta-button">📱 تواصل على تليجرام</a>
+                <a href="https://wa.me/963995606528" class="cta-button">💬 تواصل على واتساب</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- معرض الأعمال -->
+    <section id="portfolio">
+        <div class="container">
+            <h2 class="section-title">معرض أعمالي</h2>
+            <div class="portfolio-gallery">
+                <!-- مشروع 1 -->
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-image">
+                        <img src="project1.jpg" alt="موقع شركة" 
+                             onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=image-placeholder>🌐</div>';">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>موقع شركة متكامل</h3>
+                        <p>موقع احترافي مع لوحة تحكم متقدمة، نظام إدارة محتوى، وتصميم متجاوب</p>
+                    </div>
+                </div>
+
+                <!-- مشروع 2 -->
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-image">
+                        <img src="project2.jpg" alt="متجر إلكتروني" 
+                             onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=image-placeholder>🛒</div>';">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>متجر إلكتروني متكامل</h3>
+                        <p>منصة تسوق إلكتروني مع نظام دفع آمن، إدارة مخزون، وتقارير متقدمة</p>
+                    </div>
+                </div>
+
+                <!-- مشروع 3 -->
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-image">
+                        <img src="project3.jpg" alt="بوت تليجرام" 
+                             onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=image-placeholder>🤖</div>';">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>بوت تليجرام ذكي</h3>
+                        <p>بوت خدمة عملاء متقدم مع ردود تلقائية، إدارة مستخدمين، وإحصائيات مفصلة</p>
+                    </div>
+                </div>
+
+                <!-- مشروع 4 -->
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-image">
+                        <img src="project4.jpg" alt="تطبيق ويب" 
+                             onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=image-placeholder>📱</div>';">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>تطبيق ويب تفاعلي</h3>
+                        <p>تطبيق ويب سحابي لإدارة المهام والمشاريع مع مزامنة فورية</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- لوحة تحكم البوت الإسلامي -->
+    <section id="bot">
+        <div class="container">
+            <h2 class="section-title">🕌 البوت الإسلامي</h2>
+            <div class="bot-dashboard">
+                <div class="bot-header">
+                    <h2>البوت الإسلامي - قناة فلوكس</h2>
+                    <p>بوت تلقائي يرسل رسائل إسلامية إلى قناة التلجرام</p>
+                    <div id="status" class="status-online">● متصل بالبوت</div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <h3>📊 الإحصائيات</h3>
+                        <div class="stat" id="totalMessages">0</div>
+                        <p>إجمالي الرسائل المرسلة</p>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>📢 القناة</h3>
+                        <p id="channelName">@Flix1211</p>
+                        <a href="https://t.me/Flix1211" class="channel-link" target="_blank">
+                            زيارة القناة
+                        </a>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>🕒 آخر تحديث</h3>
+                        <p id="lastUpdate">--</p>
+                        <p>آخر رسالة تم إرسالها</p>
+                    </div>
+                </div>
+
+                <div class="message-box">
+                    <h3>📨 آخر الرسائل</h3>
+                    <div id="lastMessage" class="last-message">
+                        جاري تحميل آخر رسالة...
+                    </div>
+                    <div id="messageTime" class="timestamp"></div>
+                </div>
+
+                <div class="message-box">
+                    <h3>📜 سجل الرسائل</h3>
+                    <div id="messageHistory">
+                        جاري تحميل السجل...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- نموذج الاتصال -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">اتصل بي</h2>
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">الاسم الكامل</label>
+                        <input type="text" id="name" required placeholder="أدخل اسمك الكامل">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">البريد الإلكتروني</label>
+                        <input type="email" id="email" required placeholder="example@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="service">نوع الخدمة</label>
+                        <select id="service" required>
+                            <option value="">اختر الخدمة المطلوبة</option>
+                            <option value="website">موقع ويب</option>
+                            <option value="bot">بوت تليجرام</option>
+                            <option value="ecommerce">متجر إلكتروني</option>
+                            <option value="consultation">استشارة تقنية</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">الرسالة</label>
+                        <textarea id="message" rows="5" required placeholder="أخبرني عن مشروعك..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">إرسال الطلب</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // نموذج الاتصال
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                service: document.getElementById('service').value,
+                message: document.getElementById('message').value
+            };
+            
+            // هنا يمكنك إضافة كود إرسال البيانات لخادم
+            console.log('بيانات النموذج:', formData);
+            
+            alert('شكراً لتواصلك! 🎉 سأرد عليك في أقرب وقت ممكن.');
+            this.reset();
+        });
+
+        // تأثيرات التمرير
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeElements.forEach(element => {
+            observer.observe(element);
+        });
+
+        // دوال البوت الإسلامي
+        const totalMessagesEl = document.getElementById('totalMessages');
+        const channelNameEl = document.getElementById('channelName');
+        const lastUpdateEl = document.getElementById('lastUpdate');
+        const lastMessageEl = document.getElementById('lastMessage');
+        const messageTimeEl = document.getElementById('messageTime');
+        const messageHistoryEl = document.getElementById('messageHistory');
+        const statusEl = document.getElementById('status');
+
+        // بيانات وهمية للبوت (يمكن استبدالها ببيانات حقيقية من API)
+        const botData = {
+            total_messages: 147,
+            channel: "@Flix1211",
+            last_time: "2023-12-07 14:30:25",
+            last_message: "📖 {رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ} - سورة البقرة",
+            online: true,
+            history: [
+                { message: "🌙 قال رسول الله ﷺ: 'تبسمك في وجه أخيك صدقة'", time: "2023-12-07 13:30:25" },
+                { message: "💫 سبحان الله، والحمد لله، ولا إله إلا الله، والله أكبر", time: "2023-12-07 12:30:25" },
+                { message: "📖 {قُلْ هُوَ اللَّهُ أَحَدٌ، اللَّهُ الصَّمَدُ، لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ}", time: "2023-12-07 11:30:25" }
+            ]
+        };
+
+        function loadBotData() {
+            // استخدام البيانات الوهمية (استبدل هذا باستدعاء API حقيقي)
+            totalMessagesEl.textContent = botData.total_messages;
+            channelNameEl.textContent = botData.channel;
+            lastUpdateEl.textContent = botData.last_time;
+            lastMessageEl.textContent = botData.last_message;
+            messageTimeEl.textContent = `الوقت: ${botData.last_time}`;
+            
+            if (botData.online) {
+                statusEl.className = 'status-online';
+                statusEl.textContent = '● متصل بالبوت';
+            }
+            
+            // تحميل سجل الرسائل
+            if (botData.history.length > 0) {
+                messageHistoryEl.innerHTML = botData.history.map(msg => `
+                    <div class="history-item">
+                        <div>${msg.message}</div>
+                        <div class="timestamp">${msg.time}</div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // تحميل بيانات البوت عند فتح الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            loadBotData();
+            
+            // محاكاة تحديث البيانات كل 30 ثانية
+            setInterval(() => {
+                // في التطبيق الحقيقي، استبدل هذا باستدعاء API
+                botData.total_messages += 1;
+                loadBotData();
+            }, 30000);
+        });
+<div class="portfolio-gallery" id="portfolioGallery">
+    <!-- المشاريع سيتم إدراجها هنا ديناميكيًا -->
+</div>
+
+        // التنقل السلس
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم Admin</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; padding: 20px; background: #f0f0f0; }
+        h1 { text-align: center; margin-bottom: 30px; }
+        .form-group { margin-bottom: 15px; }
+        input, textarea { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
+        button { padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #2980b9; }
+        .projects-list { margin-top: 30px; }
+        .project-item { background: white; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>لوحة تحكم Admin</h1>
+
+    <form id="projectForm">
+        <div class="form-group">
+            <label>اسم المشروع</label>
+            <input type="text" id="projectName" required>
+        </div>
+        <div class="form-group">
+            <label>وصف المشروع</label>
+            <textarea id="projectDesc" required></textarea>
+        </div>
+        <div class="form-group">
+            <label>رابط الصورة</label>
+            <input type="text" id="projectImg" required>
+        </div>
+        <button type="submit">إضافة مشروع</button>
+    </form>
+
+    <div class="projects-list" id="projectsList"></div>
+
+    <script>
+        // حماية لوحة التحكم بكلمة مرور
+        const password = prompt("أدخل كلمة المرور للوصول للوحة التحكم:");
+        if(password !== "1234") {
+            alert("كلمة مرور خاطئة!");
+            window.location.href = "index.html";
+        }
+
+        const projectForm = document.getElementById('projectForm');
+        const projectsList = document.getElementById('projectsList');
+        let projects = []; // مصفوفة لتخزين المشاريع
+
+        // دالة لإضافة مشروع جديد
+        function addProject(name, desc, img) {
+            const project = { name, desc, img };
+            projects.push(project);
+            renderProjects();
+        }
+
+        // دالة لعرض المشاريع في القائمة
+        function renderProjects() {
+            projectsList.innerHTML = projects.map((p, index) => `
+                <div class="project-item">
+                    <strong>${p.name}</strong><br>
+                    ${p.desc}<br>
+                    <img src="${p.img}" alt="${p.name}" style="width:150px;margin-top:5px;">
+                </div>
+            `).join('');
+        }
+
+        // التعامل مع الفورم
+        projectForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            addProject(
+                document.getElementById('projectName').value,
+                document.getElementById('projectDesc').value,
+                document.getElementById('projectImg').value
+            );
+            alert("تم إضافة المشروع بنجاح!");
+            projectForm.reset();
+        });
+    </script>
+</body>
+</html>
